@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PDXFade</title>
+    <style>
+      @import url(http://fonts.googleapis.com/css?family=Permanent+Marker);
+      body { background:#F4F4F4; font-family:helvetica,arial,sans-serif; color:#404040; text-shadow:#fff 0 -1px 0; font-size:14px; line-height:21px; }
+      pre { font-size:12px; background:#F4F6FD; border:1px solid #E0E0E0; padding:10px; overflow:auto; }
+      h1 { font-size:48px; line-height:21px }
+      h3 { font-size:25px; }
+      h4 { font-size:20px; }
+      h1,h3,h4 { font-family:"Permanent Marker"; text-shadow:none; }
+      #demo-wrapper { margin:0 auto; width:640px; }
+      .pdxfade-slideshow-wrapper { margin:0 0 40px 0; border:10px solid #fff; -moz-box-shadow:rgba(0,0,0,0.5) 0 3px 7px; -webkit-box-shadow:rgba(0,0,0,0.5) 0 3px 7px; box-shadow:rgba(0,0,0,0.5) 0 3px 7px; border-radius:3px; }
+      #slideshow { margin:0; padding:0; }
+      .pdxfade-overlay { color:#fff; text-shadow:none; }
+      .pdxfade-overlay h2,.pdxfade-overlay p { margin:0; padding:0; }
+      .pdxfade-overlay h2 { margin:0 0 10px 0; }
+      ul li { margin:0 0 7px 0; }
+      a { color:#518ED8; }
+    </style>
+  </head>
+  <body>
+    <div id="demo-wrapper">
+      <h1>PDXFade</h1>
+      <ul id="slideshow"> 
+        <li>
+          <a href="http://google.com"><img title="City" src="slides/city.jpeg"></a>
+          <h2>The City</h2> 
+          <p>Welcome to Portland, Oregon</p>  
+        </li>
+        <li>
+          <img title="Faily Walking" src="slides/family_walking.jpeg"> 
+          <h2>Get Out</h2> 
+          <p>It's nice out</p>  
+        </li>
+        <li>
+          <a href="http://yahoo.com"><img title="Install Solar" src="slides/install_solar.jpeg"></a>
+          <h2>Solar Power</h2>
+          <p>The choice of a new generation</p>
+        </li>
+        <li>
+          <img title="Man Plant" src="slides/man_plant.jpeg"> 
+          <h2>Don't do this</h2> 
+          <p>Alyways leave plants in the ground. This kills them.</p>  
+        </li>
+        <li>
+          <img title="Pioneer Place" src="slides/pioneer_place.jpeg"> 
+          <h2>Pioneer Place</h2> 
+          <p>Stores, live music, and more.</p>  
+        </li>
+      </ul>
+      <h3>Why?</h3>
+      <p>There are a lot of slideshows out there, but they're all way too feature rich. For example the <a href="http://nivo.dev7studios.com/">Nivo Slider</a> is amazing, and can basically do what this does, but it's so over the top. Added bonus, is this slideshow doesn't require <em>any</em> CSS. Style how you want without fuss.</p>
+      <h3>How?</h3>
+      <p>Download the source (or clone it if you're a GitHub user). Add a scipt tag like:</p>
+      <pre>&lt;script src="js/jquery.pdxfade.js"&gt;&lt;/script&gt;</pre>
+      <p>Then make an <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> with <code>&lt;img&gt;</code>s in the <code>&lt;li&gt;</code>s for slides. You can wrap them with <code>&lt;a&gt;</code>s for links. You can also add <code>&lt;h2&gt;</code>s for titles of the slides and <code>&lt;p&gt;</code>s for the description. For example:</p>
+      <pre>&lt;ul id="slideshow"&gt;
+  &lt;li&gt;
+    &lt;a href="http://google.com">&lt;img title="City" src="slides/city.jpeg"&gt;&lt;/a&gt;
+    &lt;h2&gt;The City&lt;/h2&gt;
+    &lt;p&gt;Welcome to Portland, Oregon&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;img title="Faily Walking" src="slides/family_walking.jpeg"&gt;
+    &lt;h2&gt;Get Out&lt;/h2&gt;
+    &lt;p&gt;It's nice out&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</pre>
+      <p>After simply call <code>pdxfade();</code> in your jQuery like:</p>
+      <pre>$('#slideshow').pdxfade();</pre>
+      
+      <h4>Options</h4>
+      <p>There are some options you can modify as well to customize the slideshow. The stuff in the parentheses is the default value and the square brackets represent the type you give it:</p>
+      
+      <ul>
+        <li><code>animationTime (500)[int]</code>:<br>How long the fading transitions lasts in milliseconds.</li>
+        <li><code>titleTag (h2)[str]</code>:<br>The tag that'll be looked for and wrapped around the text used as the title.</li>
+        <li><code>descriptionTag (p)[str]</code>:<br>The tag that'll be looked for and wrapped around the text as the description.</li>
+        <li><code>delayTime (5000)[int]</code>:<br>How long to wait on a slide before going to the next one in milliseconds.</li>
+        <li><code>width (auto)[str]</code>:<br>The width of the slideshow. By default it guesses, but you can set a specific width too.</li>
+        <li><code>height (auto)[str]</code>:<br>Same as width.</li>
+        <li><code>classNamespace (pdxfade)[str]</code>:<br>This is prepended to all the class names in the slideshow. If you want to customize the class names you'd change it here. It'll affect <em>all</em> class names shown below.</li>
+        <li><code>arrowColor (white)[str]</code>:<br>Can be <code>white</code> or <code>black</code>. It's used to change the next and previous arrow colors.</li>
+      </ul>
+      
+      <p>If you're new to jQuery plugins, here's an example of changing two of these options:</p>
+      <pre>$('#slideshow').pdxfade({animationTime:1000,namespace:'myslideshow'});</pre>
+      
+      <h4>Class Names</h4>
+      <p>These are a list of class names used in the slideshow. You can use this to further customize your slideshow. The <code>pdxfade-</code> can be modified using the the <code>classNamespace</code> option above.</p>
+      <ul>
+        <li><code>pdxfade-active-slide</code>:<br>Class used on the visible/active slide.</li>
+        <li><code>pdxfade-slideshow-wrapper</code>:<br>When the slideshow is activated the <code>ul</code> or <code>ol</code> is wrapped in a <code>div</code> with this class.</li>
+        <li><code>pdxfade-previous</code> and <code>pdxfade-next</code>:<br>These two classes represent the next and previous arrow <code>img</code>s. on top of the slides.</li>
+        <li><code>pdxfade-overlay</code>:<br>The class used for the black overlay containing the title and description of the images.</li>
+      </ul>
+      
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script src="jquery.pdxfade.js"></script>
+    <script>
+      $('#slideshow').pdxfade();
+    </script>
+  </body>
+</html>
