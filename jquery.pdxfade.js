@@ -31,7 +31,8 @@
 			nextButton:settings.classNamespace+'-next',
 			previousButton:settings.classNamespace+'-previous',
 			overlay:settings.classNamespace+'-overlay',
-			overlayInner:settings.classNamespace+'-overlay-inner'
+			overlayInner:settings.classNamespace+'-overlay-inner',
+			linkIcon:settings.classNamespace+'-link-icon'
 		};
 		return this.each(function() {
 			var $this = $(this)
@@ -56,7 +57,6 @@
 								
 								
 								currentSlide.fadeOut(settings.animationTime).removeClass(classNames.activeSlide);
-								console.log(currentSlide.attr('style'));
 								if(dir == 'next'){
 									if(currentSlide.next().length > 0){
 										currentSlide.next().fadeIn(settings.animationTime).addClass(classNames.activeSlide);
@@ -73,6 +73,11 @@
 									else{
 										$this.find('li:last').fadeIn(settings.animationTime).addClass(classNames.activeSlide);
 									}
+								}
+								
+								
+								if(!$('.'+classNames.activeSlide+' img').parent().attr('href')){
+									$('.'+classNames.linkIcon).hide();
 								}
 								
 								updateText();
@@ -116,8 +121,13 @@
 				
 				$this.wrap('<div class="'+classNames.slideshowWrapper+'"></div>')
 				.parent('.'+classNames.slideshowWrapper)
-				.css({position:'relative',width:$(this).outerWidth()+'px',height:$(this).outerHeight()+'px',overflow:'hidden'})
-				.append('<img class="'+classNames.previousButton+'" src="left-arrow-'+settings.arrowColor+'.png" title="Previous Slide"><img class="'+classNames.nextButton+'" src="right-arrow-'+settings.arrowColor+'.png" title="Next Slide"><div class="'+classNames.overlay+'"><div class="'+classNames.overlayInner+'"><'+settings.titleTag+'></'+settings.titleTag+'><'+settings.descriptionTag+'></'+settings.descriptionTag+'></div></div>')
+				.css({
+					position:'relative',
+					width:$(this).outerWidth()+'px',
+					height:$(this).outerHeight()+'px',
+					overflow:'hidden'
+				})
+				.append('<img class="'+classNames.previousButton+'" src="'+settings.assetPath+'left-arrow-'+settings.arrowColor+'.png" title="Previous Slide"><img class="'+classNames.nextButton+'" src="'+settings.assetPath+'right-arrow-'+settings.arrowColor+'.png" title="Next Slide"><img class="'+classNames.linkIcon+'" src="'+settings.assetPath+'link.gif"><div class="'+classNames.overlay+'"><div class="'+classNames.overlayInner+'"><'+settings.titleTag+'></'+settings.titleTag+'><'+settings.descriptionTag+'></'+settings.descriptionTag+'></div></div>')
 					.find('.'+classNames.previousButton+',.'+classNames.nextButton).load(function(){
 						$(this).css({
 							top:$this.find('img:first').outerHeight()/2-$(this).outerHeight()/2+'px',
@@ -130,6 +140,18 @@
 						.end()
 					.filter('.'+classNames.nextButton).css({right:'10px'})
 						.click(function(){ api.next(); });
+					
+					
+					$this.parent().find('.'+classNames.linkIcon).load(function(){
+						$(this).css({
+							position:'absolute',
+							top:$this.find('img:first').outerHeight()/2-$(this).outerHeight()/2+'px',
+							left:$this.find('img:first').outerWidth()/2-$(this).outerWidth()/2+'px',
+							display:'none',
+							cursor:'pointer'
+						});
+					});
+					
 					
 				$this.parent()
 					.find('.'+classNames.overlay)
@@ -145,15 +167,33 @@
 								.css({
 									padding:'10px'
 								});
-				
-				api.updateText($this.find('li:first '+settings.titleTag).text(),$this.find('li:first '+settings.descriptionTag).html())
+								
+				if($this.find('li:first '+settings.titleTag).text() !== '' || $this.find('li:first '+settings.descriptionTag).text() !== ''){
+					api.updateText($this.find('li:first '+settings.titleTag).text(),$this.find('li:first '+settings.descriptionTag).html());
+				}
+				else{
+					$('.'+classNames.overlay).css('bottom','-'+$(this).outerHeight()+'px');
+				}
 				
 				//Make things fade in and out on mouseenter/leave (like arrows)
 				$this.parent().bind('mouseenter mouseleave',function(e){
 						var arrows = $('.'+classNames.previousButton+',.'+classNames.nextButton)
-						,		to = 0.9;
+						,		to = 0.8
+						,		href = $('.'+classNames.activeSlide+' img').parent().attr('href');
 						if(e.type == 'mouseleave'){ to = 0.5; }
-						arrows.stop(false,false).fadeTo(250,to);
+						arrows.stop(false,false).fadeTo(0,to);
+						
+						//The link icon...
+						if(e.type == 'mouseenter'){
+							if(href){
+								$this.parent().find('.'+classNames.linkIcon).fadeTo(0,0.25).click(function(){
+									window.location = href;
+								});
+							}
+						}
+						else if(e.type == 'mouseleave'){
+							$this.parent().find('.'+classNames.linkIcon).hide();
+						}
 				});
 				
 				//Default styles for the slideshow wrapper
@@ -175,6 +215,7 @@
 		classNamespace:'pdxfade',
 		titleTag: 'h2',
 		descriptionTag:'p',
+		assetPath:'',
 		arrowColor:'white' //can be white or black
 	};
 })(jQuery);
