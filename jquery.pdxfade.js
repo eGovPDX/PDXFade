@@ -20,6 +20,8 @@
 	OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 	WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	
+	Get the Source at: http://github.com/eGovPDX/PDXFade
+	
 */
 
 ;(function($){
@@ -75,7 +77,6 @@
 									}
 								}
 								
-								
 								if(!$('.'+classNames.activeSlide+' img').parent().attr('href')){
 									$('.'+classNames.linkIcon).hide();
 								}
@@ -119,12 +120,19 @@
 			
 			$this.find('img:first').load(function(){
 				
+				if(settings.width == 'auto'){
+					settings.width = $(this).outerWidth()+'px'
+				}
+				if(settings.height == 'auto'){
+					settings.height = $(this).outerHeight()+'px'
+				}
+				
 				$this.wrap('<div class="'+classNames.slideshowWrapper+'"></div>')
 				.parent('.'+classNames.slideshowWrapper)
 				.css({
 					position:'relative',
-					width:$(this).outerWidth()+'px',
-					height:$(this).outerHeight()+'px',
+					width:settings.width,
+					height:settings.height,
 					overflow:'hidden'
 				})
 				.append('<img class="'+classNames.previousButton+'" src="'+settings.assetPath+'left-arrow-'+settings.arrowColor+'.png" title="Previous Slide"><img class="'+classNames.nextButton+'" src="'+settings.assetPath+'right-arrow-'+settings.arrowColor+'.png" title="Next Slide"><img class="'+classNames.linkIcon+'" src="'+settings.assetPath+'link.gif"><div class="'+classNames.overlay+'"><div class="'+classNames.overlayInner+'"><'+settings.titleTag+'></'+settings.titleTag+'><'+settings.descriptionTag+'></'+settings.descriptionTag+'></div></div>')
@@ -186,7 +194,12 @@
 						//The link icon...
 						if(e.type == 'mouseenter'){
 							if(href){
-								$this.parent().find('.'+classNames.linkIcon).fadeTo(0,0.25).click(function(){
+								$this.parent().find('.'+classNames.linkIcon).fadeTo(0,0.25,
+									function(){
+										//Fix for IE8 and the arrow images having black borders
+										$('.'+classNames.previousButton+',.'+classNames.nextButton).css('filter','');
+									})
+								.click(function(){
 									window.location = href;
 								});
 							}
