@@ -2,14 +2,14 @@
 
 ## Why?
 
-There are a lot of slideshows out there, but they’re all way too feature
+There are a lot of slideshows out there, but they're all way too feature
 rich. For example the [Nivo Slider](http://nivo.dev7studios.com/) is amazing, and can basically do
-what this does, but it’s so over the top. Added bonus, is this slideshow
-doesn’t require *any* CSS. Style how you want without fuss.
+what this does, but it's so over the top. Added bonus, is this slideshow
+doesn't require *any* CSS. Style how you want without fuss.
 
 ## How?
 
-Download the source (or clone it if you’re a GitHub user). Add a scipt
+Download the source (or clone it if you're a GitHub user). Add a scipt
 tag like:
 
     <script src="js/jquery.pdxfade.js"></script>
@@ -44,10 +44,10 @@ square brackets represent the type you give it:
 -   `animationTime (500)[int]`:  
     How long the fading transitions lasts in milliseconds.
 -   `titleTag (h2)[str]`:  
-    The tag that’ll be looked for and wrapped around the text used as
+    The tag that'll be looked for and wrapped around the text used as
     the title.
 -   `descriptionTag (p)[str]`:  
-    The tag that’ll be looked for and wrapped around the text as the
+    The tag that'll be looked for and wrapped around the text as the
     description.
 -   `delayTime (5000)[int]`:  
     How long to wait on a slide before going to the next one in
@@ -59,13 +59,13 @@ square brackets represent the type you give it:
     Same as width.
 -   `classNamespace (pdxfade)[str]`:  
     This is prepended to all the class names in the slideshow. If you
-    want to customize the class names you’d change it here. It’ll affect
+    want to customize the class names you'd change it here. It'll affect
     *all* class names shown below.
 -   `arrowColor (white)[str]`:  
-    Can be `white` or `black`. It’s used to change the next and previous
+    Can be `white` or `black`. It's used to change the next and previous
     arrow colors.
 
-If you’re new to jQuery plugins, here’s an example of changing two of
+If you're new to jQuery plugins, here's an example of changing two of
 these options:
 
     $('#slideshow').pdxfade({animationTime:1000,namespace:'myslideshow'});
