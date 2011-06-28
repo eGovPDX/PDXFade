@@ -101,13 +101,12 @@
 			
 			timer = window.setInterval(function(){ api.next(); },settings.animationTime+settings.delayTime)
 			
-			$this.css({margin:'0',padding:'0',listStyle:'none'})
+			$this.css({margin:'0',padding:'0',listStyle:'none'}).find('li').css('display','block');
 			
 			$this.find('img')
-				.css({'display':'block','position':'absolute',top:'0'})
 				//Forces no caching on images so we can check when they are really loaded
 				.each(function(){
-					$(this).attr('src',$(this).attr('src')+'?rand='+Math.round(Math.random()*10001));
+						$(this).attr('src',$(this).attr('src')+'?rand='+Math.round(Math.random()*10001));
 				});			
 			
 			$this.find('li:first').addClass(classNames.activeSlide);
